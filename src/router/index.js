@@ -11,6 +11,13 @@ const routes = [
     name: 'edit_container',
     component: edit_container
   },
+  // 這是因為githubpage有這個做為root的根所以需要,ˋ惡邊先用*號代替
+  {
+    path: '*',
+    // path: '/static-site-generator/',
+    name: 'edit_container',
+    component: edit_container
+  },
   {
     path: '/show',
     name: 'show',
