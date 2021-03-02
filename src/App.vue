@@ -1,32 +1,83 @@
 <template>
-  <div id="app">
-    <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+  <div id="app" class="app">
+    <div class="components_list_bar">
+      <component
+        class="components_list_bar_item"
+        v-for="(componentName, componentIndex) in componentItems"
+        showType='list'
+        :is="componentName"
+        :key="componentIndex"
+      />
     </div>
-    <router-view/>
+    <router-view class="main_container"/>
+    <div class="components_setting_bar">
+      <component
+        class="components_list_bar_item"
+        showType='setting'
+        :is="settingData && settingData.type"
+        :data="settingData"
+      />
+    </div>
   </div>
 </template>
 
+<script>
+import { mapState } from 'vuex';
+
+import componentItems from './components/componentItems';
+
+export default {
+  extends: componentItems,
+  name: 'App',
+  computed: mapState([
+    'pageData',
+    'settingData'
+  ]),
+}
+</script>
+
+
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
+
+$borderStyle : 3px double rgba(0, 0, 0, 166);
+
+@mixin borderStyle{
+    box-sizing: border-box;
+    width: 250px;
 }
 
-#nav {
-  padding: 30px;
+.app{
+  display: flex;
+  height: 100vh;
 
-  a {
-    font-weight: bold;
-    color: #2c3e50;
+  .components_list_bar{
 
-    &.router-link-exact-active {
-      color: #42b983;
+    @include borderStyle;
+    border-right: $borderStyle;
+
+    &_item{
+
+      margin: 2px;
+      padding: 2px;
+      border: 1px solid #666;
+      border-radius: 5;
+
     }
+
   }
+
+  .main_container{
+
+    flex-grow: 1;
+
+  }
+
+  .components_setting_bar{
+
+    @include borderStyle;
+    border-left: $borderStyle;
+    
+  }
+
 }
 </style>
