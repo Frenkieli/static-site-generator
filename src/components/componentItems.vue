@@ -1,16 +1,19 @@
 <script>
 import titleItem from './titleItem';
+import textItem from './textItem';
 
 export default {
   data (){
     return{
       componentItems: [
-        'titleItem'
+        'titleItem',
+        'textItem'
       ]
     }
   },
   components:{
-    titleItem
+    titleItem,
+    textItem
   }
 }
 </script>

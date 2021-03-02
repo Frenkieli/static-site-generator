@@ -25,6 +25,13 @@ export default new Vuex.Store({
             align: 'left',
             weight: 5,
             text: '這是一個H2元件'
+          },
+          {
+            type: 'textItem',
+            size: 16,
+            align: 'left',
+            weight: 5,
+            text: '這是一段假的文字'
           }
         ]
       }
