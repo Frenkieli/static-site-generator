@@ -4,6 +4,12 @@
       class="edit_container_section"
       v-for="(sectionData, sectionIndex) in pageData"
       :key="sectionIndex"
+      @dragenter.stop="onDragItemEnter"
+      @dragover.stop="onDragItemEnter"
+      @dragleave.stop="onDragItemLeave"
+      @drop.stop="function(e){
+        onDragItemEnd(e, sectionIndex);
+      }"
     >
       <component
         v-for="(itemData, itemIndex) in sectionData.child"
@@ -12,9 +18,18 @@
         :data="itemData"
         :key="itemIndex"
         @click.native="settingItem(sectionIndex, itemIndex)"
+        @dragenter.native.stop="onDragItemEnter"
+        @dragover.native.stop="onDragItemEnter"
+        @dragleave.native.stop="onDragItemLeave"
+        @drop.native.stop="function(e){
+          onDragItemEnd(e, sectionIndex, itemIndex);
+        }"
       />
     </section>
-    <div class="edit_container_section edit_container_section_add">
+    <div 
+      class="edit_container_section edit_container_section_add"
+      @click="addSection"
+    >
 
     </div>
   </div>
@@ -33,10 +48,52 @@ export default {
   ]),
   methods: {
     ...mapMutations([
-      'changeSettingData'
+      'changeSettingData',
+      'addPageSection',
+      'addPageSectionChild'
     ]),
     settingItem(sectionIndex, itemIndex){
       this.changeSettingData({sectionIndex, itemIndex})
+    },
+    addSection(){
+      this.addPageSection();
+    },
+    onDragItemEnter(e){
+      let el = e.target;
+      e.preventDefault();
+      e.stopPropagation();
+      if(e.offsetY <= el.offsetHeight / 2){
+        el.classList.add('addToTop');
+        el.classList.remove('addToBottom');
+      }else{
+        el.classList.remove('addToTop');
+        el.classList.add('addToBottom');
+      }
+      el.classList.add('dragItemIn');
+    },
+    onDragItemLeave(e){
+      let el = e.target;
+
+      el.classList.remove('dragItemIn');
+      el.classList.remove('addToTop');
+      el.classList.remove('addToBottom');
+    },
+    onDragItemEnd(e, sectionIndex, itemIndex){
+      let el = e.target;
+
+      el.classList.remove('dragItemIn');
+      el.classList.remove('addToTop');
+      el.classList.remove('addToBottom');
+
+      let side = e.offsetY <= el.offsetHeight / 2 ? 'top' : 'bottom';
+      this.addPageSectionChild({
+        itemName: e.dataTransfer.getData("text"),
+        side: side,
+        serialNumber: {
+          sectionIndex, itemIndex
+        }
+      });
+
     }
   }
 }
@@ -45,9 +102,38 @@ export default {
 <style lang="scss" scoped>
 .edit_container{
 
+    .dragItemIn{
+      position: relative;
+      background-color: #aaa;
+
+      &::after{
+        content: '';
+        position: absolute;
+        left: 0;
+        right: 0;
+        height: 2px;
+        background-color: #f00;
+      }
+
+      &.addToTop{
+        &::after{
+          top: 0;
+        }
+      }
+
+      &.addToBottom{
+        &::after{
+          bottom: 0;
+        }
+      }
+      
+    }
+
+
   &_section{
-    margin: auto;
     width: 1200px;
+    margin: auto;
+    padding: 5px;
     border: 1px solid #777;
   }
 

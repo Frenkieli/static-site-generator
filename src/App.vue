@@ -5,8 +5,12 @@
         class="components_list_bar_item"
         v-for="(componentName, componentIndex) in componentItems"
         showType='list'
+        draggable="true"
         :is="componentName"
         :key="componentIndex"
+        @dragstart.native="function(e){
+          onItemDargStart(e, componentName);
+        }"
       />
     </div>
     <router-view class="main_container"/>
@@ -33,6 +37,11 @@ export default {
     'pageData',
     'settingData'
   ]),
+  methods: {
+    onItemDargStart(e, itemName){
+      e.dataTransfer.setData("text/plain", itemName);
+    }
+  }
 }
 </script>
 
