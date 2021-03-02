@@ -1,16 +1,20 @@
 <template>
-  <p 
+  <div
     v-if="showType === 'edit'" 
     :style="{
-      fontSize: data.size + 'px',
-      textAlign: data.align,
-      fontWeight: data.weight + '00'
+      float: data.align
     }"
   >
-    {{ data.text }}
-  </p>
+    <img
+      class="baseComponents_image"
+      :src="data.src"
+      :style="{
+        width: data.size + 'px',
+      }"
+    />
+  </div>
   <div v-else-if="showType === 'list'">
-    文字組件
+    圖形組件
   </div>
   <div v-else-if="showType === 'setting'">
     <input 
@@ -21,7 +25,7 @@
     <br>
     <input 
       type="text" 
-      v-model="settingData.text" 
+      v-model="settingData.src" 
       @change="onChange"
     >
     <br>
@@ -30,31 +34,20 @@
       @change="onChange"
     >
       <option value="left">left</option>
-      <option value="center">center</option>
       <option value="right">right</option>
-    </select>
-    <br>
-    <select 
-      v-model="settingData.weight" 
-      @change="onChange"
-    >
-      <option
-        v-for="n in 9"
-        :value="n"
-        :key="'weight' + n"
-      >{{ n * 100 }}</option>
     </select>
   </div>
 </template>
 
 <script>
-
+// 基礎狀態等等都在這邊繼承使用
 import componentBase from './componentBase';
 
 export default {
   extends: componentBase,
-  name: 'textItem',
+  name: 'imageItem',
   methods:{
+    // 這個是在mounted階段會觸發的function
     editInitEvent(){
     },
     onChange(){
@@ -64,3 +57,10 @@ export default {
   }
 }
 </script>
+
+<style lang="scss" scoped>
+.baseComponents_image{
+  pointer-events: none;
+  vertical-align: top;
+}
+</style>

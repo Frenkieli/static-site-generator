@@ -106,9 +106,10 @@ export default {
       position: relative;
       background-color: #aaa;
 
-      &::after{
+      &::before{
         content: '';
         position: absolute;
+        z-index: 1;
         left: 0;
         right: 0;
         height: 2px;
@@ -116,13 +117,13 @@ export default {
       }
 
       &.addToTop{
-        &::after{
+        &::before{
           top: 0;
         }
       }
 
       &.addToBottom{
-        &::after{
+        &::before{
           bottom: 0;
         }
       }
@@ -135,6 +136,11 @@ export default {
     margin: auto;
     padding: 5px;
     border: 1px solid #777;
+    &::after{
+      content: '';
+      display: block;
+      clear: both;
+    }
   }
 
   &_section_add{

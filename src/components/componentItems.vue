@@ -1,19 +1,22 @@
 <script>
 import titleItem from './titleItem';
 import textItem from './textItem';
+import imageItem from './imageItem';
 
 export default {
   data (){
     return{
       componentItems: [
         'titleItem',
-        'textItem'
+        'textItem',
+        'imageItem'
       ]
     }
   },
   components:{
     titleItem,
-    textItem
+    textItem,
+    imageItem
   }
 }
 </script>
