@@ -25,6 +25,34 @@
           onDragItemEnd(e, sectionIndex, itemIndex);
         }"
       />
+      <div class="edit_container_section_toolbar">
+        <div 
+          class="edit_container_section_toolbar_button edit_container_section_toolbar_upbutton"
+          @click="sectionUp(sectionIndex)"
+          :style="sectionIndex !== 0 ? {} : {
+            color:  '#aaa',
+            cursor: 'default'
+          }"
+        >
+          <font-awesome-icon icon="chevron-circle-up" />
+        </div>
+        <div 
+          class="edit_container_section_toolbar_button edit_container_section_toolbar_downbutton"
+          @click="sectionDown(sectionIndex)"
+          :style="sectionIndex !== pageData.length - 1 ? {} : {
+            color:  '#aaa',
+            cursor: 'default'
+          }"
+        >
+          <font-awesome-icon icon="chevron-circle-down" />
+        </div>
+        <div 
+          class="edit_container_section_toolbar_button edit_container_section_toolbar_deletebutton"
+          @click="sectionDelete(sectionIndex)"
+        >
+          <font-awesome-icon icon="trash-alt" />
+        </div>
+      </div>
     </section>
     <div 
       class="edit_container_section edit_container_section_add"
@@ -50,7 +78,8 @@ export default {
     ...mapMutations([
       'changeSettingData',
       'addPageSection',
-      'addPageSectionChild'
+      'addPageSectionChild',
+      'pageSectionStatusUpdate'
     ]),
     settingItem(sectionIndex, itemIndex){
       this.changeSettingData({sectionIndex, itemIndex})
@@ -93,8 +122,29 @@ export default {
           sectionIndex, itemIndex
         }
       });
-
-    }
+    },
+    sectionUp(seleteIndex){
+      if(seleteIndex != 0){
+        this.pageSectionStatusUpdate({
+          cmd: 'up',
+          seleteIndex: seleteIndex
+        })
+      }
+    },
+    sectionDown(seleteIndex){
+      if(seleteIndex != this.pageData.length - 1){
+        this.pageSectionStatusUpdate({
+          cmd: 'down',
+          seleteIndex: seleteIndex
+        })
+      }
+    },
+    sectionDelete(seleteIndex){
+      this.pageSectionStatusUpdate({
+        cmd: 'delete',
+        seleteIndex: seleteIndex
+      })
+    },
   }
 }
 </script>
@@ -132,7 +182,9 @@ export default {
 
 
   &_section{
+    position: relative;
     width: 1200px;
+    min-height: 20px;
     margin: auto;
     padding: 5px;
     border: 1px solid #777;
@@ -140,6 +192,30 @@ export default {
       content: '';
       display: block;
       clear: both;
+    }
+    &:hover{
+      .edit_container_section_toolbar{
+        display: block;
+      }
+    }
+    &_toolbar{
+      display: none;
+      position: absolute;
+      top: -1px;
+      left: -1px;
+      font-size: 25px;
+      background-color: #ffffffee;
+      border: 1px solid #000000aa;
+      padding: 2px;
+
+      &_button{
+        display: inline-block;
+        margin:0 10px;
+        cursor: pointer;
+        &:hover{
+          color: #00f;
+        }
+      }
     }
   }
 
