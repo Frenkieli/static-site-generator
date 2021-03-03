@@ -39,7 +39,7 @@ export default {
   ]),
   methods: {
     onItemDargStart(e, itemName){
-      e.dataTransfer.setData("text/plain", itemName);
+      e.dataTransfer.setData("text/plain", '{ "cmd" : "newItem", "data": "' + itemName + '"}');
     }
   }
 }

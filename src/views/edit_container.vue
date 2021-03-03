@@ -12,12 +12,16 @@
       }"
     >
       <component
+        draggable="true"
         v-for="(itemData, itemIndex) in sectionData.child"
         showType='edit'
         :is="itemData.type"
         :data="itemData"
         :key="itemIndex"
         @click.native="settingItem(sectionIndex, itemIndex)"
+        @dragstart.native="function(e){
+          onItemDargStart(e, sectionIndex, itemIndex);
+        }"
         @dragenter.native.stop="onDragItemEnter"
         @dragover.native.stop="onDragItemEnter"
         @dragleave.native.stop="onDragItemLeave"
@@ -79,13 +83,17 @@ export default {
       'changeSettingData',
       'addPageSection',
       'addPageSectionChild',
-      'pageSectionStatusUpdate'
+      'pageSectionStatusUpdate',
+      'updatePageSectionChild'
     ]),
     settingItem(sectionIndex, itemIndex){
       this.changeSettingData({sectionIndex, itemIndex})
     },
     addSection(){
       this.addPageSection();
+    },
+    onItemDargStart(e, sectionIndex, itemIndex){
+      e.dataTransfer.setData("text/plain", '{ "cmd" : "moveItem", "data": {"sectionIndex": ' + sectionIndex + ', "itemIndex": ' + itemIndex + '}}');
     },
     onDragItemEnter(e){
       let el = e.target;
@@ -109,19 +117,33 @@ export default {
     },
     onDragItemEnd(e, sectionIndex, itemIndex){
       let el = e.target;
-
       el.classList.remove('dragItemIn');
       el.classList.remove('addToTop');
       el.classList.remove('addToBottom');
-
+      let dragData = JSON.parse(e.dataTransfer.getData("text"));
       let side = e.offsetY <= el.offsetHeight / 2 ? 'top' : 'bottom';
-      this.addPageSectionChild({
-        itemName: e.dataTransfer.getData("text"),
-        side: side,
-        serialNumber: {
-          sectionIndex, itemIndex
-        }
-      });
+      switch (dragData.cmd) {
+        case "newItem":
+          this.addPageSectionChild({
+            itemName: dragData.data,
+            side: side,
+            serialNumber: {
+              sectionIndex, itemIndex
+            }
+          });
+          break;
+        case "moveItem":
+          this.updatePageSectionChild({
+            itemSerialNumber: dragData.data,
+            side: side,
+            serialNumber: {
+              sectionIndex, itemIndex
+            }
+          })
+          break;
+        default:
+          break;
+      }
     },
     sectionUp(seleteIndex){
       if(seleteIndex != 0){

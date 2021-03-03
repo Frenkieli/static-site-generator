@@ -84,6 +84,22 @@ export default new Vuex.Store({
       }
       state.pageData[data.serialNumber.sectionIndex].child.splice(toIndex, 0, JSON.parse(JSON.stringify(componentsItemDefault[data.itemName])));
     },
+    // 變更一個子組件到對應section
+    updatePageSectionChild(state, data){
+      let toIndex;
+      if(typeof data.serialNumber.itemIndex !== 'number'){
+        toIndex = data.side === 'top' ? 0 : state.pageData[data.serialNumber.sectionIndex].child.length;
+      }else{
+        toIndex = data.side === 'top' ? data.serialNumber.itemIndex : (data.serialNumber.itemIndex + 1);
+      }
+      if(data.itemSerialNumber.sectionIndex === data.serialNumber.sectionIndex &&
+        data.itemSerialNumber.itemIndex === data.serialNumber.itemIndex
+        ){
+          toIndex = data.itemSerialNumber.itemIndex;
+      }
+      let item = state.pageData[data.itemSerialNumber.sectionIndex].child.splice(data.itemSerialNumber.itemIndex, 1)[0];
+      state.pageData[data.serialNumber.sectionIndex].child.splice(toIndex, 0, item);
+    },
     // 更新該section位置和狀態
     pageSectionStatusUpdate(state, data){
       switch (data.cmd) {
