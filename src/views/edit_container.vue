@@ -15,6 +15,7 @@
         :is="itemData.type"
         v-for="(itemData, itemIndex) in sectionData.child"
         :key="itemIndex"
+        class="edit_container_section_item"
         draggable="true"
         show-type="edit"
         :data="itemData"
@@ -201,12 +202,13 @@ export default {
 
 
   &_section {
+    cursor: pointer;
     position: relative;
     margin: auto;
     padding: 5px;
     width: 1200px;
     min-height: 20px;
-    border: 1px solid #777;
+    border: 1px solid #0003;
 
     &::after {
       content: '';
@@ -215,9 +217,41 @@ export default {
     }
 
     &:hover {
+      outline: 3px solid rgb(0, 255, 242);
+
       .edit_container_section_toolbar {
         display: block;
       }
+    }
+
+    &_item {
+      cursor: pointer;
+
+      &:hover {
+        outline: 3px solid rgb(27, 107, 255);
+      }
+    }
+
+    &_add {
+      cursor: pointer;
+      margin-top: 10px;
+      border-radius: 20px;
+      outline: none !important;
+      transition: 0.1s;
+
+      &::after {
+        content: '+';
+        display: block;
+        font-size: 100px;
+        text-align: center;
+      
+      }
+
+      &:hover {
+        color: #fff;
+        background-color: #777;
+      }
+
     }
 
     &_toolbar {
@@ -242,25 +276,6 @@ export default {
     }
   }
 
-  &_section_add {
-    cursor: pointer;
-    margin-top: 10px;
-    border-radius: 20px;
-    transition: 0.1s;
 
-    &::after {
-      content: '+';
-      display: block;
-      font-size: 100px;
-      text-align: center;
-      
-    }
-
-    &:hover {
-      color: #fff;
-      background-color: #777;
-    }
-
-  }
 }
 </style>
