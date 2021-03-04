@@ -48,24 +48,24 @@ export default {
 
 <style lang="scss">
 
-$borderStyle : 3px double rgba(0, 0, 0, 166);
+$border-style: 3px double rgba(0, 0, 0, 166);
 
-@mixin borderStyle{
-    box-sizing: border-box;
-    width: 250px;
+@mixin border-style {
+  box-sizing: border-box;
+  width: 250px;
 }
 
-.app{
+.app {
   display: flex;
   height: 100vh;
 
-  .components_list_bar{
+  .components_list_bar {
 
-    @include borderStyle;
-    border-right: $borderStyle;
+    @include border-style;
 
-    &_item{
+    border-right: $border-style;
 
+    &_item {
       margin: 2px;
       padding: 2px;
       border: 1px solid #666;
@@ -75,16 +75,16 @@ $borderStyle : 3px double rgba(0, 0, 0, 166);
 
   }
 
-  .main_container{
-
+  .main_container {
     flex-grow: 1;
 
   }
 
-  .components_setting_bar{
+  .components_setting_bar {
 
-    @include borderStyle;
-    border-left: $borderStyle;
+    @include border-style;
+
+    border-left: $border-style;
     
   }
 

@@ -59,7 +59,7 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.baseComponents_image{
+.baseComponents_image {
   pointer-events: none;
   vertical-align: top;
 }

@@ -172,92 +172,95 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.edit_container{
+.edit_container {
+  .dragItemIn {
+    position: relative;
+    background-color: #aaa;
 
-    .dragItemIn{
-      position: relative;
-      background-color: #aaa;
-
-      &::before{
-        content: '';
-        position: absolute;
-        z-index: 1;
-        left: 0;
-        right: 0;
-        height: 2px;
-        background-color: #f00;
-      }
-
-      &.addToTop{
-        &::before{
-          top: 0;
-        }
-      }
-
-      &.addToBottom{
-        &::before{
-          bottom: 0;
-        }
-      }
-      
+    &::before {
+      content: '';
+      position: absolute;
+      right: 0;
+      left: 0;
+      height: 2px;
+      background-color: #f00;
+      z-index: 1;
     }
 
+    &.addToTop {
+      &::before {
+        top: 0;
+      }
+    }
 
-  &_section{
+    &.addToBottom {
+      &::before {
+        bottom: 0;
+      }
+    }
+      
+  }
+
+
+  &_section {
     position: relative;
-    width: 1200px;
-    min-height: 20px;
     margin: auto;
     padding: 5px;
+    width: 1200px;
+    min-height: 20px;
     border: 1px solid #777;
-    &::after{
+
+    &::after {
       content: '';
       display: block;
       clear: both;
     }
-    &:hover{
-      .edit_container_section_toolbar{
+
+    &:hover {
+      .edit_container_section_toolbar {
         display: block;
       }
     }
-    &_toolbar{
-      display: none;
+
+    &_toolbar {
       position: absolute;
       top: -1px;
       left: -1px;
-      font-size: 25px;
-      background-color: #ffffffee;
-      border: 1px solid #000000aa;
+      display: none;
       padding: 2px;
+      font-size: 25px;
+      background-color: #fffe;
+      border: 1px solid #000a;
 
-      &_button{
-        display: inline-block;
-        margin:0 10px;
+      &_button {
         cursor: pointer;
-        &:hover{
+        display: inline-block;
+        margin: 0 10px;
+
+        &:hover {
           color: #00f;
         }
       }
     }
   }
 
-  &_section_add{
+  &_section_add {
     cursor: pointer;
-    transition: 0.1s;
-    border-radius: 20px;
     margin-top: 10px;
+    border-radius: 20px;
+    transition: 0.1s;
 
-    &::after{
+    &::after {
       content: '+';
       display: block;
-      text-align: center;
       font-size: 100px;
+      text-align: center;
       
     }
 
-    &:hover{
+    &:hover {
+      color: #fff;
       background-color: #777;
-      color: #fff
     }
 
   }
