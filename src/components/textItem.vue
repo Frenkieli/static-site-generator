@@ -10,7 +10,12 @@
     {{ data.text }}
   </p>
   <div v-else-if="showType === 'list'">
-    文字組件
+    <img 
+      class="tool_item"
+      draggable="false"
+      :src="'img/components/' + componentsName + '.png'" 
+      :alt="componentsName"
+    >
   </div>
   <div v-else-if="showType === 'setting'">
     <input 
@@ -62,6 +67,11 @@ import componentBase from './componentBase';
 export default {
   name: 'TextItem',
   extends: componentBase,
+  data(){
+    return{
+      componentsName: "textItem"
+    }
+  },
   methods:{
     editInitEvent(){
     },

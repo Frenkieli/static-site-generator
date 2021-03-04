@@ -14,7 +14,12 @@
     >
   </div>
   <div v-else-if="showType === 'list'">
-    圖形組件
+    <img 
+      class="tool_item"
+      draggable="false"
+      :src="'img/components/' + componentsName + '.png'" 
+      :alt="componentsName"
+    >
   </div>
   <div v-else-if="showType === 'setting'">
     <input 
@@ -50,6 +55,11 @@ import componentBase from './componentBase';
 export default {
   name: 'ImageItem',
   extends: componentBase,
+  data(){
+    return{
+      componentsName: "imageItem"
+    }
+  },
   methods:{
     // 這個是在mounted階段會觸發的function
     editInitEvent(){

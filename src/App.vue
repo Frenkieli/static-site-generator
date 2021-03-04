@@ -55,7 +55,7 @@ $border-style: 3px double rgba(0, 0, 0, 166);
 
 @mixin border-style {
   box-sizing: border-box;
-  width: 250px;
+  width: 200px;
 }
 
 .app {
@@ -69,11 +69,20 @@ $border-style: 3px double rgba(0, 0, 0, 166);
     border-right: $border-style;
 
     &_item {
+      cursor: grab;
       margin: 2px;
       padding: 2px;
       border: 1px solid #666;
       border-radius: 5;
 
+      &:hover {
+        outline: 3px solid rgb(0, 255, 242);
+      }
+    }
+    
+    .tool_item {
+      width: 100%;
+      vertical-align: middle;
     }
 
   }
@@ -88,7 +97,6 @@ $border-style: 3px double rgba(0, 0, 0, 166);
     @include border-style;
 
     border-left: $border-style;
-    
   }
 
 }

@@ -4,10 +4,10 @@
       v-for="(sectionData, sectionIndex) in pageData"
       :key="sectionIndex"
       class="edit_container_section"
-      @dragenter.stop="onDragItemEnter"
-      @dragover.stop="onDragItemEnter"
-      @dragleave.stop="onDragItemLeave"
-      @drop.stop="function(e){
+      @dragenter.stop.prevent="onDragItemEnter"
+      @dragover.stop.prevent="onDragItemEnter"
+      @dragleave.stop.prevent="onDragItemLeave"
+      @drop.stop.prevent="function(e){
         onDragItemEnd(e, sectionIndex);
       }"
     >
@@ -23,10 +23,10 @@
         @dragstart.native="function(e){
           onItemDargStart(e, sectionIndex, itemIndex);
         }"
-        @dragenter.native.stop="onDragItemEnter"
-        @dragover.native.stop="onDragItemEnter"
-        @dragleave.native.stop="onDragItemLeave"
-        @drop.native.stop="function(e){
+        @dragenter.native.stop.prevent="onDragItemEnter"
+        @dragover.native.stop.prevent="onDragItemEnter"
+        @dragleave.native.stop.prevent="onDragItemLeave"
+        @drop.native.stop.prevent="function(e){
           onDragItemEnd(e, sectionIndex, itemIndex);
         }"
       />
@@ -96,8 +96,6 @@ export default {
     },
     onDragItemEnter(e){
       let el = e.target;
-      e.preventDefault();
-      e.stopPropagation();
       if(e.offsetY <= el.offsetHeight / 2){
         el.classList.add('addToTop');
         el.classList.remove('addToBottom');
