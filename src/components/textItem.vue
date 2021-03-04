@@ -14,14 +14,14 @@
   </div>
   <div v-else-if="showType === 'setting'">
     <input 
-      type="number" 
       v-model="settingData.size" 
+      type="number" 
       @change="onChange"
     >
     <br>
     <input 
-      type="text" 
       v-model="settingData.text" 
+      type="text" 
       @change="onChange"
     >
     <br>
@@ -29,9 +29,15 @@
       v-model="settingData.align" 
       @change="onChange"
     >
-      <option value="left">left</option>
-      <option value="center">center</option>
-      <option value="right">right</option>
+      <option value="left">
+        left
+      </option>
+      <option value="center">
+        center
+      </option>
+      <option value="right">
+        right
+      </option>
     </select>
     <br>
     <select 
@@ -40,9 +46,11 @@
     >
       <option
         v-for="n in 9"
-        :value="n"
         :key="'weight' + n"
-      >{{ n * 100 }}</option>
+        :value="n"
+      >
+        {{ n * 100 }}
+      </option>
     </select>
   </div>
 </template>
@@ -52,8 +60,8 @@
 import componentBase from './componentBase';
 
 export default {
+  name: 'TextItem',
   extends: componentBase,
-  name: 'textItem',
   methods:{
     editInitEvent(){
     },

@@ -4,6 +4,11 @@ import textItem from './textItem';
 import imageItem from './imageItem';
 
 export default {
+  components:{
+    titleItem,
+    textItem,
+    imageItem
+  },
   data (){
     return{
       componentItems: [
@@ -12,11 +17,6 @@ export default {
         'imageItem'
       ]
     }
-  },
-  components:{
-    titleItem,
-    textItem,
-    imageItem
   }
 }
 </script>

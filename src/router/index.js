@@ -1,5 +1,5 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 import edit_container from '../views/edit_container.vue';
 import show_container from '../views/show_container.vue';
 

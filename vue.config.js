@@ -1,6 +1,13 @@
 const StyleLintPlugin = require('stylelint-webpack-plugin');
 
 module.exports = {
+  publicPath: './',
+  devServer: {
+    overlay: {
+      warnings: true,
+      errors: true
+    }
+  },
   configureWebpack: {
     plugins: [
       new StyleLintPlugin({
@@ -8,5 +15,5 @@ module.exports = {
       }),
     ],
   },
-  publicPath: './'
+  lintOnSave: process.env.NODE_ENV !== 'production',
 }

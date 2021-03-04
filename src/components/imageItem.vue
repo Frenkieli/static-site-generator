@@ -11,21 +11,21 @@
       :style="{
         width: data.size + 'px',
       }"
-    />
+    >
   </div>
   <div v-else-if="showType === 'list'">
     圖形組件
   </div>
   <div v-else-if="showType === 'setting'">
     <input 
-      type="number" 
       v-model="settingData.size" 
+      type="number" 
       @change="onChange"
     >
     <br>
     <input 
-      type="text" 
       v-model="settingData.src" 
+      type="text" 
       @change="onChange"
     >
     <br>
@@ -33,8 +33,12 @@
       v-model="settingData.align" 
       @change="onChange"
     >
-      <option value="left">left</option>
-      <option value="right">right</option>
+      <option value="left">
+        left
+      </option>
+      <option value="right">
+        right
+      </option>
     </select>
   </div>
 </template>
@@ -44,8 +48,8 @@
 import componentBase from './componentBase';
 
 export default {
+  name: 'ImageItem',
   extends: componentBase,
-  name: 'imageItem',
   methods:{
     // 這個是在mounted階段會觸發的function
     editInitEvent(){

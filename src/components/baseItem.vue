@@ -2,14 +2,11 @@
   <!-- 這邊是主要顯示畫面用的 -->
   <div 
     v-if="showType === 'edit'" 
-  >
-  </div>
+  />
   <!-- 這邊是在左方工具欄位顯示用的 -->
-  <div v-else-if="showType === 'list'">
-  </div>
+  <div v-else-if="showType === 'list'" />
   <!-- 這邊是右方設定畫面使用的 -->
-  <div v-else-if="showType === 'setting'">
-  </div>
+  <div v-else-if="showType === 'setting'" />
 </template>
 
 <script>
@@ -17,8 +14,8 @@
 import componentBase from './componentBase';
 
 export default {
+  name: 'BaseItem',
   extends: componentBase,
-  name: 'baseItem',
   methods:{
     // 這個是在mounted階段會觸發的function
     editInitEvent(){

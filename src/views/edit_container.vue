@@ -1,9 +1,9 @@
 <template>
   <div class="edit_container">
     <section
-      class="edit_container_section"
       v-for="(sectionData, sectionIndex) in pageData"
       :key="sectionIndex"
+      class="edit_container_section"
       @dragenter.stop="onDragItemEnter"
       @dragover.stop="onDragItemEnter"
       @dragleave.stop="onDragItemLeave"
@@ -12,12 +12,12 @@
       }"
     >
       <component
-        draggable="true"
-        v-for="(itemData, itemIndex) in sectionData.child"
-        showType='edit'
         :is="itemData.type"
-        :data="itemData"
+        v-for="(itemData, itemIndex) in sectionData.child"
         :key="itemIndex"
+        draggable="true"
+        show-type="edit"
+        :data="itemData"
         @click.native="settingItem(sectionIndex, itemIndex)"
         @dragstart.native="function(e){
           onItemDargStart(e, sectionIndex, itemIndex);
@@ -32,21 +32,21 @@
       <div class="edit_container_section_toolbar">
         <div 
           class="edit_container_section_toolbar_button edit_container_section_toolbar_upbutton"
-          @click="sectionUp(sectionIndex)"
           :style="sectionIndex !== 0 ? {} : {
-            color:  '#aaa',
+            color: '#aaa',
             cursor: 'default'
           }"
+          @click="sectionUp(sectionIndex)"
         >
           <font-awesome-icon icon="chevron-circle-up" />
         </div>
         <div 
           class="edit_container_section_toolbar_button edit_container_section_toolbar_downbutton"
-          @click="sectionDown(sectionIndex)"
           :style="sectionIndex !== pageData.length - 1 ? {} : {
-            color:  '#aaa',
+            color: '#aaa',
             cursor: 'default'
           }"
+          @click="sectionDown(sectionIndex)"
         >
           <font-awesome-icon icon="chevron-circle-down" />
         </div>
@@ -61,9 +61,7 @@
     <div 
       class="edit_container_section edit_container_section_add"
       @click="addSection"
-    >
-
-    </div>
+    />
   </div>
 </template>
 
@@ -73,8 +71,8 @@ import { mapState, mapMutations } from 'vuex';
 import componentItems from '../components/componentItems';
 
 export default {
+  name: 'EditContainer',
   extends: componentItems,
-  name: 'edit_container',
   computed: mapState([
     'pageData'
   ]),

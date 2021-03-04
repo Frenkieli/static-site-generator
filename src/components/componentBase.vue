@@ -21,7 +21,7 @@ export default {
   watch: {
     data:{
       immediate: true,
-      handler(newValue, oldValue) {
+      handler(newValue) {
         this.settingData = newValue;
       }
     }

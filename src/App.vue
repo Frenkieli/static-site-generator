@@ -1,24 +1,27 @@
 <template>
-  <div id="app" class="app">
+  <div
+    id="app"
+    class="app"
+  >
     <div class="components_list_bar">
       <component
-        class="components_list_bar_item"
-        v-for="(componentName, componentIndex) in componentItems"
-        showType='list'
-        draggable="true"
         :is="componentName"
+        v-for="(componentName, componentIndex) in componentItems"
         :key="componentIndex"
+        class="components_list_bar_item"
+        show-type="list"
+        draggable="true"
         @dragstart.native="function(e){
           onItemDargStart(e, componentName);
         }"
       />
     </div>
-    <router-view class="main_container"/>
+    <router-view class="main_container" />
     <div class="components_setting_bar">
       <component
-        class="components_list_bar_item"
-        showType='setting'
         :is="settingData && settingData.type"
+        class="components_list_bar_item"
+        show-type="setting"
         :data="settingData"
       />
     </div>
@@ -31,8 +34,8 @@ import { mapState } from 'vuex';
 import componentItems from './components/componentItems';
 
 export default {
-  extends: componentItems,
   name: 'App',
+  extends: componentItems,
   computed: mapState([
     'pageData',
     'settingData'
