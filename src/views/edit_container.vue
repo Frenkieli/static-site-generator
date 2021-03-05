@@ -1,9 +1,10 @@
 <template>
   <div class="edit_container">
-    <section
+    <sectionItem
       v-for="(sectionData, sectionIndex) in pageData"
       :key="sectionIndex"
       class="edit_container_section"
+      show-type="edit"
       @dragenter.stop.prevent="onDragItemEnter"
       @dragover.stop.prevent="onDragItemEnter"
       @dragleave.stop.prevent="onDragItemLeave"
@@ -11,54 +12,56 @@
         onDragItemEnd(e, sectionIndex);
       }"
     >
-      <component
-        :is="itemData.type"
-        v-for="(itemData, itemIndex) in sectionData.child"
-        :key="itemIndex"
-        class="edit_container_section_item"
-        draggable="true"
-        show-type="edit"
-        :data="itemData"
-        @click.native="settingItem(sectionIndex, itemIndex)"
-        @dragstart.native="function(e){
-          onItemDargStart(e, sectionIndex, itemIndex);
-        }"
-        @dragenter.native.stop.prevent="onDragItemEnter"
-        @dragover.native.stop.prevent="onDragItemEnter"
-        @dragleave.native.stop.prevent="onDragItemLeave"
-        @drop.native.stop.prevent="function(e){
-          onDragItemEnd(e, sectionIndex, itemIndex);
-        }"
-      />
-      <div class="edit_container_section_toolbar">
-        <div 
-          class="edit_container_section_toolbar_button edit_container_section_toolbar_upbutton"
-          :style="sectionIndex !== 0 ? {} : {
-            color: '#aaa',
-            cursor: 'default'
+      <div class="edit_container_section_container">
+        <component
+          :is="itemData.type"
+          v-for="(itemData, itemIndex) in sectionData.child"
+          :key="itemIndex"
+          class="edit_container_section_item"
+          draggable="true"
+          show-type="edit"
+          :data="itemData"
+          @click.native="settingItem(sectionIndex, itemIndex)"
+          @dragstart.native="function(e){
+            onItemDargStart(e, sectionIndex, itemIndex);
           }"
-          @click="sectionUp(sectionIndex)"
-        >
-          <font-awesome-icon icon="chevron-circle-up" />
-        </div>
-        <div 
-          class="edit_container_section_toolbar_button edit_container_section_toolbar_downbutton"
-          :style="sectionIndex !== pageData.length - 1 ? {} : {
-            color: '#aaa',
-            cursor: 'default'
+          @dragenter.native.stop.prevent="onDragItemEnter"
+          @dragover.native.stop.prevent="onDragItemEnter"
+          @dragleave.native.stop.prevent="onDragItemLeave"
+          @drop.native.stop.prevent="function(e){
+            onDragItemEnd(e, sectionIndex, itemIndex);
           }"
-          @click="sectionDown(sectionIndex)"
-        >
-          <font-awesome-icon icon="chevron-circle-down" />
-        </div>
-        <div 
-          class="edit_container_section_toolbar_button edit_container_section_toolbar_deletebutton"
-          @click="sectionDelete(sectionIndex)"
-        >
-          <font-awesome-icon icon="trash-alt" />
+        />
+        <div class="edit_container_section_toolbar">
+          <div 
+            class="edit_container_section_toolbar_button edit_container_section_toolbar_upbutton"
+            :style="sectionIndex !== 0 ? {} : {
+              color: '#aaa',
+              cursor: 'default'
+            }"
+            @click="sectionUp(sectionIndex)"
+          >
+            <font-awesome-icon icon="chevron-circle-up" />
+          </div>
+          <div 
+            class="edit_container_section_toolbar_button edit_container_section_toolbar_downbutton"
+            :style="sectionIndex !== pageData.length - 1 ? {} : {
+              color: '#aaa',
+              cursor: 'default'
+            }"
+            @click="sectionDown(sectionIndex)"
+          >
+            <font-awesome-icon icon="chevron-circle-down" />
+          </div>
+          <div 
+            class="edit_container_section_toolbar_button edit_container_section_toolbar_deletebutton"
+            @click="sectionDelete(sectionIndex)"
+          >
+            <font-awesome-icon icon="trash-alt" />
+          </div>
         </div>
       </div>
-    </section>
+    </sectionItem>
     <div 
       class="edit_container_section edit_container_section_add"
       @click="addSection"
@@ -200,13 +203,23 @@ export default {
 
 
   &_section {
-    cursor: pointer;
-    position: relative;
-    margin: auto;
-    padding: 5px;
-    width: 1200px;
-    min-height: 20px;
-    border: 1px solid #0003;
+    &_container {
+      cursor: pointer;
+      position: relative;
+      margin: auto;
+      padding: 5px;
+      width: 1200px;
+      min-height: 20px;
+      border: 1px solid #0003;
+
+      &:hover {
+        outline: 3px solid rgb(0, 255, 242);
+
+        .edit_container_section_toolbar {
+          display: block;
+        }
+      }
+    }
 
     &::after {
       content: '';
@@ -214,13 +227,7 @@ export default {
       clear: both;
     }
 
-    &:hover {
-      outline: 3px solid rgb(0, 255, 242);
 
-      .edit_container_section_toolbar {
-        display: block;
-      }
-    }
 
     &_item {
       cursor: pointer;
