@@ -35,7 +35,10 @@ export default {
   methods:{
     ...mapMutations([
       'updataSettingData'
-    ])
+    ]),
+    onChange(){
+      this.updataSettingData(this.settingData);
+    }
   }
 }
 </script>

@@ -4,15 +4,29 @@
       v-for="(sectionData, sectionIndex) in pageData"
       :key="sectionIndex"
       class="edit_container_section"
-      show-type="edit"
-      @dragenter.stop.prevent="onDragItemEnter"
-      @dragover.stop.prevent="onDragItemEnter"
-      @dragleave.stop.prevent="onDragItemLeave"
-      @drop.stop.prevent="function(e){
-        onDragItemEnd(e, sectionIndex);
+      :style="{
+        height: sectionData.height <= 0 ? 'auto' : sectionData.height + 'vh',
+        backgroundImage : 'url(' + sectionData.backgroundImage + ')',
       }"
+      show-type="edit"
+      @click.native.stop="settingItem(sectionIndex, null)"
     >
-      <div class="edit_container_section_container">
+      <div 
+        class="edit_container_section_container"
+        :style="sectionData.fluid ? {
+          width : '100%',
+          height: '100%',
+          backgroundColor : sectionData.backgroundColor
+        } : {
+          backgroundColor : sectionData.backgroundColor
+        }"
+        @dragenter.stop.prevent="onDragItemEnter"
+        @dragover.stop.prevent="onDragItemEnter"
+        @dragleave.stop.prevent="onDragItemLeave"
+        @drop.stop.prevent="function(e){
+          onDragItemEnd(e, sectionIndex);
+        }"
+      >
         <component
           :is="itemData.type"
           v-for="(itemData, itemIndex) in sectionData.child"
@@ -21,7 +35,7 @@
           draggable="true"
           show-type="edit"
           :data="itemData"
-          @click.native="settingItem(sectionIndex, itemIndex)"
+          @click.native.stop="settingItem(sectionIndex, itemIndex)"
           @dragstart.native="function(e){
             onItemDargStart(e, sectionIndex, itemIndex);
           }"
@@ -198,33 +212,51 @@ export default {
         bottom: 0;
       }
     }
-      
   }
 
 
   &_section {
+    cursor: pointer;
+    text-align: center;
+
     &_container {
-      cursor: pointer;
       position: relative;
-      margin: auto;
+      display: inline-block;
+      box-sizing: border-box;
       padding: 5px;
       width: 1200px;
-      min-height: 20px;
+      min-height: 32px;
       border: 1px solid #0003;
+      vertical-align: middle;
 
-      &:hover {
-        outline: 3px solid rgb(0, 255, 242);
 
-        .edit_container_section_toolbar {
-          display: block;
-        }
-      }
+    }
+
+    &::after,
+    &::before {
+      content: '';
+    }
+
+    &::before {
+      vertical-align: middle;
+      display: inline-block;
+      width: 0;
+      height: 100%;
     }
 
     &::after {
-      content: '';
       display: block;
       clear: both;
+    }
+
+    &:hover {
+      .edit_container_section_container {
+        outline: 3px solid rgb(0, 255, 242);
+      }
+
+      .edit_container_section_toolbar {
+        display: block;
+      }
     }
 
 

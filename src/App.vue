@@ -121,6 +121,8 @@ export default {
   bottom: 0;
   box-sizing: border-box;
   width: 200px;
+  background-color: #eee;
+  z-index: 1;
   transition: 0.3s;
 
   &::after {

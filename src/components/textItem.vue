@@ -74,10 +74,6 @@ export default {
   },
   methods:{
     editInitEvent(){
-    },
-    onChange(){
-      let vm = this;
-      console.log(vm.settingData, 'settingData');
     }
   }
 }

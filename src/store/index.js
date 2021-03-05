@@ -9,6 +9,11 @@ export default new Vuex.Store({
   state: {
     pageData: [
       {
+        type: 'sectionItem',
+        fluid: false,
+        height: 100,
+        backgroundColor: '#ffffffdd',
+        backgroundImage: 'img/clock.jpg',
         child: [
           {
             type: 'titleItem',
@@ -34,6 +39,11 @@ export default new Vuex.Store({
         ]
       },
       {
+        type: 'sectionItem',
+        fluid: false,
+        height: 0,
+        backgroundColor: 'transparent',
+        backgroundImage: '',
         child: [
           {
             type: 'titleItem',
@@ -119,14 +129,26 @@ export default new Vuex.Store({
     },
     // 變更子組件的參數設定
     changeSettingData(state, data){
-      Vue.set(state, 'settingData', Object.assign({
-        sectionIndex: data.sectionIndex,
-        itemIndex: data.itemIndex
-      }, state.pageData[data.sectionIndex].child[data.itemIndex]));
+      if(typeof data.itemIndex != 'number'){
+        Vue.set(state, 'settingData', Object.assign({
+          sectionIndex: data.sectionIndex,
+          itemIndex: data.itemIndex
+        }, state.pageData[data.sectionIndex]));
+      }else{
+        Vue.set(state, 'settingData', Object.assign({
+          sectionIndex: data.sectionIndex,
+          itemIndex: data.itemIndex
+        }, state.pageData[data.sectionIndex].child[data.itemIndex]));
+      }
     },
     // 更新被設定的資料
     updataSettingData(state, data){
       Vue.set(state, 'settingData', data);
+      if(typeof data.itemIndex != 'number'){
+        Vue.set(state.pageData, data.sectionIndex, data);
+      }else{
+        Vue.set(state.pageData[data.sectionIndex].child, data.itemIndex, data);
+      }
     },
     // 清空被設定的資料
     clearSettingData(state){
@@ -135,7 +157,11 @@ export default new Vuex.Store({
     // 刪除被設定的組件
     deleteSettingData(state){
       console.log(state.pageData[state.settingData.sectionIndex].child, state.settingData.itemIndex);
-      Vue.delete(state.pageData[state.settingData.sectionIndex].child, state.settingData.itemIndex);
+      if(typeof state.settingData.itemIndex != 'number'){
+        Vue.delete(state.pageData, state.settingData.sectionIndex);
+      }else{
+        Vue.delete(state.pageData[state.settingData.sectionIndex].child, state.settingData.itemIndex);
+      }
       Vue.set(state, 'settingData', null);
     }
   },
